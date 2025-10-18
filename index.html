@@ -10,179 +10,219 @@
     <style>
         html {
             scroll-behavior: smooth;
-            /* Adjust this value to match your sticky header's height */
             scroll-padding-top: 5rem; 
         }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0d1117;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+        
+        .panel {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
         }
         .gradient-text {
-            background: linear-gradient(90deg, #8B5CF6, #06B6D4);
+            background: linear-gradient(90deg, #007BFF, #6F42C1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             text-fill-color: transparent;
         }
-        .gradient-bg {
-             background: linear-gradient(90deg, #8B5CF6, #06B6D4);
+        .primary-btn {
+            background-color: #007BFF;
+            color: white;
+            transition: all 0.3s ease;
         }
-        @keyframes pulse-glow {
-            0%, 100% {
-                box-shadow: 0 0 20px rgba(139, 92, 246, 0.4), 0 0 30px rgba(6, 182, 212, 0.3);
-            }
-            50% {
-                box-shadow: 0 0 35px rgba(139, 92, 246, 0.6), 0 0 50px rgba(6, 182, 212, 0.5);
-            }
+        .primary-btn:hover {
+            background-color: #0056b3;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+            transform: translateY(-2px);
         }
-        .futuristic-image {
+
+        @keyframes subtle-pulse {
+            0%, 100% { box-shadow: 0 0 15px rgba(0, 123, 255, 0.1); }
+            50% { box-shadow: 0 0 25px rgba(0, 123, 255, 0.2); }
+        }
+        .profile-image {
             border-radius: 0.75rem;
-            animation: pulse-glow 5s infinite ease-in-out;
+            animation: subtle-pulse 6s infinite ease-in-out;
+            border: 2px solid rgba(0, 123, 255, 0.2);
+            padding: 4px;
+            background-color: #fff;
         }
         .skill-tag {
+            background-color: #fff;
+            border: 1px solid #dee2e6;
             transition: all 0.3s ease;
-            border: 1px solid #30363d;
         }
         .skill-tag:hover {
-            transform: translateY(-3px);
-            border-color: #8B5CF6;
-            box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
+            transform: translateY(-3px) scale(1.05);
+            border-color: #007BFF;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            color: #007BFF;
         }
         .timeline-item::before {
             content: '';
             position: absolute;
-            top: 10px;
-            left: -2.375rem;
-            width: 1.25rem;
-            height: 1.25rem;
+            top: 10px; left: -2.375rem;
+            width: 1.25rem; height: 1.25rem;
             border-radius: 50%;
-            background-color: #8B5CF6;
-            border: 3px solid #0d1117;
-            box-shadow: 0 0 10px #8B5CF6;
+            background-color: #007BFF;
+            border: 3px solid #f8f9fa;
         }
         .timeline-line {
             position: absolute;
-            top: 10px;
-            left: -1.875rem;
-            width: 2px;
-            height: calc(100% - 10px);
-            background-color: #30363d;
+            top: 10px; left: -1.875rem;
+            width: 2px; height: calc(100% - 10px);
+            background: #dee2e6;
         }
         .project-card {
-            background-color: #161b22;
-            border: 1px solid #30363d;
+            background-color: #ffffff;
+            border: 1px solid #e9ecef;
             transition: all 0.3s ease;
         }
         .project-card:hover {
             transform: translateY(-5px);
-            border-color: #06B6D4;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            border-color: #007BFF;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
-        .project-overlay {
-             background: linear-gradient(90deg, rgba(139, 92, 246, 0.9), rgba(6, 182, 212, 0.9));
+
+        /* Reveal on scroll animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Nav link hover brackets */
+        .nav-link { position: relative; }
+        .nav-link::before, .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .nav-link::before {
+            top: -2px; left: -8px;
+            border-top: 1px solid #007BFF;
+            border-left: 1px solid #007BFF;
+        }
+        .nav-link::after {
+            bottom: -2px; right: -8px;
+            border-bottom: 1px solid #007BFF;
+            border-right: 1px solid #007BFF;
+        }
+        .nav-link:hover::before, .nav-link:hover::after {
+            opacity: 1;
         }
     </style>
 </head>
-<body class="bg-gray-900 text-gray-300">
+<body class="text-gray-800">
 
-    <!-- Header & Navigation --><header class="bg-gray-900/80 backdrop-blur-sm shadow-md sticky top-0 z-50 border-b border-gray-800">
+    <header class="bg-white/80 backdrop-blur-sm sticky top-0 z-50 border-b border-gray-200">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#" class="text-2xl font-bold gradient-text">Om Acharya</a>
-            <div class="hidden md:flex space-x-6 items-center">
-                <a href="#about" class="text-gray-400 hover:text-white transition duration-300">About</a>
-                <a href="#skills" class="text-gray-400 hover:text-white transition duration-300">Skills</a>
-                <a href="#experience" class="text-gray-400 hover:text-white transition duration-300">Experience</a>
-                <a href="#education" class="text-gray-400 hover:text-white transition duration-300">Education</a>
-                <a href="#projects" class="text-gray-400 hover:text-white transition duration-300">Projects</a>
-                <a href="#contact" class="gradient-bg text-white px-4 py-2 rounded-full hover:opacity-90 transition duration-300">Contact</a>
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#about" class="nav-link text-gray-600 hover:text-blue-600 transition duration-300">About</a>
+                <a href="#skills" class="nav-link text-gray-600 hover:text-blue-600 transition duration-300">Skills</a>
+                <a href="#experience" class="nav-link text-gray-600 hover:text-blue-600 transition duration-300">Experience</a>
+                <a href="#projects" class="nav-link text-gray-600 hover:text-blue-600 transition duration-300">Projects</a>
+                <a href="#contact" class="primary-btn px-4 py-2 rounded-md">Contact</a>
             </div>
             <div class="md:hidden">
-                <button id="menu-btn" class="text-gray-400 focus:outline-none">
-                    <i class="fas fa-bars fa-lg"></i>
-                </button>
+                <button id="menu-btn" class="text-gray-600 focus:outline-none"><i class="fas fa-bars fa-lg"></i></button>
             </div>
         </nav>
-        <!-- Mobile Menu --><div id="mobile-menu" class="hidden md:hidden bg-gray-900 border-t border-gray-800">
-            <a href="#about" class="block py-3 px-4 text-sm text-gray-400 hover:bg-gray-800 hover:text-white">About</a>
-            <a href="#skills" class="block py-3 px-4 text-sm text-gray-400 hover:bg-gray-800 hover:text-white">Skills</a>
-            <a href="#experience" class="block py-3 px-4 text-sm text-gray-400 hover:bg-gray-800 hover:text-white">Experience</a>
-            <a href="#education" class="block py-3 px-4 text-sm text-gray-400 hover:bg-gray-800 hover:text-white">Education</a>
-            <a href="#projects" class="block py-3 px-4 text-sm text-gray-400 hover:bg-gray-800 hover:text-white">Projects</a>
-            <a href="#contact" class="block py-3 px-4 text-sm text-gray-400 hover:bg-gray-800 hover:text-white">Contact</a>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+            <a href="#about" class="block py-3 px-4 text-sm text-gray-600 hover:bg-gray-100">About</a>
+            <a href="#skills" class="block py-3 px-4 text-sm text-gray-600 hover:bg-gray-100">Skills</a>
+            <a href="#experience" class="block py-3 px-4 text-sm text-gray-600 hover:bg-gray-100">Experience</a>
+            <a href="#projects" class="block py-3 px-4 text-sm text-gray-600 hover:bg-gray-100">Projects</a>
+            <a href="#contact" class="block py-3 px-4 text-sm text-gray-600 hover:bg-gray-100">Contact</a>
         </div>
     </header>
 
-    <!-- Main Content --><main class="container mx-auto px-6 py-12">
+    <main class="container mx-auto px-6 py-12">
 
-        <!-- Hero Section --><section id="home" class="text-center py-20">
-            <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight">
+        <section id="home" class="text-center py-20 min-h-screen flex flex-col justify-center">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight">
                 <span class="block">Hi, I'm Om Acharya.</span>
-                <span class="block gradient-text mt-2">A Passionate IT Professional.</span>
+                <span id="typewriter" class="block gradient-text mt-2"></span>
             </h1>
-            <p class="mt-6 text-lg text-gray-400 max-w-2xl mx-auto">
+            <p class="mt-6 text-lg text-gray-600 max-w-2xl mx-auto">
                 I build, manage, and secure IT infrastructures, bridging the gap between technology and business success with a focus on automation and user empowerment.
             </p>
             <div class="mt-8 flex justify-center space-x-4">
-                <a href="#contact" class="gradient-bg text-white px-6 py-3 rounded-full text-lg font-semibold hover:opacity-90 transition duration-300 shadow-lg">Get in Touch</a>
-                <a href="#projects" class="bg-gray-800 text-gray-300 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-700 transition duration-300 border border-gray-700">View My Work</a>
+                <a href="#contact" class="primary-btn px-6 py-3 rounded-md text-lg font-semibold shadow-lg">Get in Touch</a>
+                <a href="#projects" class="bg-gray-200 text-gray-800 px-6 py-3 rounded-md text-lg font-semibold hover:bg-gray-300 transition duration-300 border border-gray-300">View My Work</a>
             </div>
         </section>
 
-        <!-- About Me Section --><section id="about" class="py-20 bg-gray-900/50 rounded-2xl shadow-lg p-8 md:p-12 border border-gray-800">
-            <div class="grid md:grid-cols-3 gap-12 items-center">
+        <section id="about" class="py-20 panel rounded-lg reveal">
+            <div class="grid md:grid-cols-3 gap-12 items-center p-8 md:p-4">
                 <div class="md:col-span-1 flex justify-center">
-                    <img src="Profile.jpg" alt="Om Acharya" class="max-w-xs md:max-w-full h-auto futuristic-image">
+                    <img src="Profile.jpg" alt="Om Acharya" class="max-w-xs md:max-w-full h-auto profile-image">
                 </div>
                 <div class="md:col-span-2">
-                    <h2 class="text-3xl font-bold text-white mb-4">About Me</h2>
-                    <p class="text-gray-400 mb-4">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">About Me</h2>
+                    <p class="text-gray-600 mb-4">
                         I am a results-driven IT professional with over 2.5 years of experience in technical support, systems administration, and network infrastructure management. My expertise lies in both hybrid cloud and on-premise environments, where I excel at automating processes with PowerShell, managing critical systems like Microsoft 365 and Azure, and resolving complex technical issues to minimize downtime and enhance operational efficiency.
                     </p>
-                    <p class="text-gray-400">
+                    <p class="text-gray-600">
                         My passion for technology extends beyond just fixing problems; I'm driven by the challenge of optimizing systems and creating seamless user experiences. I'm always eager to learn and apply new technologies, and I'm currently pursuing my CCNA and Azure Administrator certifications to deepen my expertise. I thrive in collaborative environments and I'm looking for a challenging new role where I can contribute to a forward-thinking team.
                     </p>
                 </div>
             </div>
         </section>
 
-        <!-- Skills Section --><section id="skills" class="py-20">
+        <section id="skills" class="py-20 reveal">
             <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-white">Core Competencies</h2>
-                <p class="text-gray-400 mt-2">A snapshot of my technical skills and the technologies I work with.</p>
+                <h2 class="text-3xl font-bold text-gray-900">Core Competencies</h2>
+                <p class="text-gray-600 mt-2">A snapshot of my technical skills and the technologies I work with.</p>
             </div>
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                <div class="skill-tag bg-gray-800 p-4 rounded-lg flex items-center justify-center text-center font-medium">Microsoft 365</div>
-                <div class="skill-tag bg-gray-800 p-4 rounded-lg flex items-center justify-center text-center font-medium">Azure AD</div>
-                <div class="skill-tag bg-gray-800 p-4 rounded-lg flex items-center justify-center text-center font-medium">Windows Server</div>
-                <div class="skill-tag bg-gray-800 p-4 rounded-lg flex items-center justify-center text-center font-medium">PowerShell</div>
-                <div class="skill-tag bg-gray-800 p-4 rounded-lg flex items-center justify-center text-center font-medium">Intune</div>
-                <div class="skill-tag bg-gray-800 p-4 rounded-lg flex items-center justify-center text-center font-medium">SharePoint</div>
-                <div class="skill-tag bg-gray-800 p-4 rounded-lg flex items-center justify-center text-center font-medium">Active Directory</div>
-                <div class="skill-tag bg-gray-800 p-4 rounded-lg flex items-center justify-center text-center font-medium">Networking</div>
-                <div class="skill-tag bg-gray-800 p-4 rounded-lg flex items-center justify-center text-center font-medium">Sophos Firewall</div>
-                <div class="skill-tag bg-gray-800 p-4 rounded-lg flex items-center justify-center text-center font-medium">Zendesk</div>
-                <div class="skill-tag bg-gray-800 p-4 rounded-lg flex items-center justify-center text-center font-medium">ITIL Framework</div>
-                <div class="skill-tag bg-gray-800 p-4 rounded-lg flex items-center justify-center text-center font-medium">Jamf Pro</div>
-                <div class="skill-tag bg-gray-800 p-4 rounded-lg flex items-center justify-center text-center font-medium">SQL/PostgreSQL</div>
-                <div class="skill-tag bg-gray-800 p-4 rounded-lg flex items-center justify-center text-center font-medium">Power Automate</div>
-                <div class="skill-tag bg-gray-800 p-4 rounded-lg flex items-center justify-center text-center font-medium">REST APIs</div>
+                <div class="skill-tag p-4 rounded-lg flex items-center justify-center text-center font-medium">Microsoft 365</div>
+                <div class="skill-tag p-4 rounded-lg flex items-center justify-center text-center font-medium">Azure AD</div>
+                <div class="skill-tag p-4 rounded-lg flex items-center justify-center text-center font-medium">Windows Server</div>
+                <div class="skill-tag p-4 rounded-lg flex items-center justify-center text-center font-medium">PowerShell</div>
+                <div class="skill-tag p-4 rounded-lg flex items-center justify-center text-center font-medium">Intune</div>
+                <div class="skill-tag p-4 rounded-lg flex items-center justify-center text-center font-medium">SharePoint</div>
+                <div class="skill-tag p-4 rounded-lg flex items-center justify-center text-center font-medium">Active Directory</div>
+                <div class="skill-tag p-4 rounded-lg flex items-center justify-center text-center font-medium">Networking (TCP/IP, DNS)</div>
+                <div class="skill-tag p-4 rounded-lg flex items-center justify-center text-center font-medium">Sophos Firewall</div>
+                <div class="skill-tag p-4 rounded-lg flex items-center justify-center text-center font-medium">Zendesk</div>
+                <div class="skill-tag p-4 rounded-lg flex items-center justify-center text-center font-medium">ITIL Framework</div>
+                <div class="skill-tag p-4 rounded-lg flex items-center justify-center text-center font-medium">Jamf Pro</div>
+                <div class="skill-tag p-4 rounded-lg flex items-center justify-center text-center font-medium">SQL/PostgreSQL</div>
+                <div class="skill-tag p-4 rounded-lg flex items-center justify-center text-center font-medium">Power Automate</div>
+                <div class="skill-tag p-4 rounded-lg flex items-center justify-center text-center font-medium">REST APIs</div>
             </div>
         </section>
 
-        <!-- Experience Section --><section id="experience" class="py-20">
+        <section id="experience" class="py-20 reveal">
             <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-white">Professional Experience</h2>
-                <p class="text-gray-400 mt-2">My career journey so far.</p>
+                <h2 class="text-3xl font-bold text-gray-900">Professional Experience</h2>
+                <p class="text-gray-600 mt-2">My career journey so far.</p>
             </div>
             <div class="relative max-w-2xl mx-auto">
                 <div class="timeline-line"></div>
                 <div class="space-y-12">
                     <div class="relative pl-10 timeline-item">
-                        <div class="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700">
+                        <div class="panel p-6 rounded-lg">
                             <p class="text-sm text-gray-500">Aug 2024 - Present</p>
-                            <h3 class="text-xl font-bold text-white mt-1">ICT Site Support Analyst</h3>
-                            <p class="text-md text-cyan-400 font-semibold">Terry White Chemmart</p>
-                            <ul class="mt-4 list-disc list-inside text-gray-400 space-y-2">
+                            <h3 class="text-xl font-bold text-gray-800 mt-1">ICT Site Support Analyst</h3>
+                            <p class="text-md text-blue-600 font-semibold">Terry White Chemmart</p>
+                            <ul class="mt-4 list-disc list-inside text-gray-600 space-y-2">
                                 <li>Serve as the primary L2 escalation point for 150+ corporate staff.</li>
                                 <li>Administer hybrid infrastructure: Azure AD, Group Policies, on-premise servers.</li>
                                 <li>Manage Windows & macOS endpoints using Intune, Datto RMM, and Jamf Pro.</li>
@@ -192,11 +232,11 @@
                         </div>
                     </div>
                     <div class="relative pl-10 timeline-item">
-                         <div class="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700">
+                        <div class="panel p-6 rounded-lg">
                             <p class="text-sm text-gray-500">Apr 2023 - May 2024</p>
-                            <h3 class="text-xl font-bold text-white mt-1">System Support Officer</h3>
-                            <p class="text-md text-cyan-400 font-semibold">Credit Max Pty. Ltd.</p>
-                            <ul class="mt-4 list-disc list-inside text-gray-400 space-y-2">
+                            <h3 class="text-xl font-bold text-gray-800 mt-1">System Support Officer</h3>
+                            <p class="text-md text-blue-600 font-semibold">Credit Max Pty. Ltd.</p>
+                            <ul class="mt-4 list-disc list-inside text-gray-600 space-y-2">
                                 <li>Automated user onboarding and admin tasks with PowerShell, reducing manual effort by 40%.</li>
                                 <li>Administered Microsoft 365 suite and managed user identities in a hybrid AD/Azure AD environment.</li>
                                 <li>Enforced endpoint security using Group Policy (GPO) and Microsoft Intune.</li>
@@ -208,90 +248,62 @@
             </div>
         </section>
 
-        <!-- Education Section --><section id="education" class="py-20">
+        <section id="education" class="py-20 reveal">
             <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-white">Education</h2>
-                <p class="text-gray-400 mt-2">My academic background.</p>
+                <h2 class="text-3xl font-bold text-gray-900">Education</h2>
             </div>
             <div class="max-w-2xl mx-auto">
-                <div class="bg-gray-800 p-6 rounded-lg shadow-lg flex items-center space-x-6 border border-gray-700">
-                    <div class="text-purple-400">
-                        <i class="fas fa-graduation-cap fa-3x"></i>
-                    </div>
+                <div class="panel p-6 rounded-lg flex items-center space-x-6">
+                    <div class="text-blue-600"><i class="fas fa-graduation-cap fa-3x"></i></div>
                     <div>
                         <p class="text-sm text-gray-500">Graduated Dec 2023</p>
-                        <h3 class="text-xl font-bold text-white mt-1">Bachelor of Information Technology</h3>
-                        <p class="text-md text-cyan-400 font-semibold">Federation University Australia - VIC</p>
+                        <h3 class="text-xl font-bold text-gray-800 mt-1">Bachelor of Information Technology</h3>
+                        <p class="text-md text-blue-600 font-semibold">Federation University Australia - VIC</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Projects Section --><section id="projects" class="py-20 bg-gray-900/50 rounded-2xl shadow-lg p-8 md:p-12 border border-gray-800">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-white">Key Projects</h2>
-                <p class="text-gray-400 mt-2">Some of the initiatives I'm proud to have led or contributed to.</p>
+        <section id="projects" class="py-20 panel rounded-lg reveal">
+            <div class="text-center mb-12 px-4">
+                <h2 class="text-3xl font-bold text-gray-900">Key Projects</h2>
+                <p class="text-gray-600 mt-2">Some of the initiatives I'm proud to have led or contributed to.</p>
             </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="project-card rounded-lg overflow-hidden relative group">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-white">SharePoint IT Portal Development</h3>
-                        <p class="mt-2 text-gray-400">Developed a comprehensive IT portal on SharePoint Online for asset management, shared drive access, and a centralized service desk.</p>
-                    </div>
-                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 project-overlay">
-                        <p class="text-white text-center p-4">Improved user self-service and streamlined IT operations through a single, accessible platform.</p>
-                    </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 p-8">
+                <div class="project-card rounded-lg overflow-hidden relative group p-6">
+                    <h3 class="text-xl font-bold">SharePoint IT Portal</h3>
+                    <p class="mt-2 text-gray-600">Developed a comprehensive IT portal on SharePoint Online for asset management and a centralized service desk.</p>
                 </div>
-                <div class="project-card rounded-lg overflow-hidden relative group">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-white">Enterprise Infrastructure Upgrade</h3>
-                        <p class="mt-2 text-gray-400">Coordinated a major upgrade of servers, network hardware, and AV technology in conference rooms with minimal business disruption.</p>
-                    </div>
-                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 project-overlay">
-                       <p class="text-white text-center p-4">Successfully refreshed critical infrastructure, enhancing performance and reliability across the enterprise.</p>
-                    </div>
+                <div class="project-card rounded-lg overflow-hidden relative group p-6">
+                    <h3 class="text-xl font-bold">Infrastructure Upgrade</h3>
+                    <p class="mt-2 text-gray-600">Coordinated a major upgrade of servers, network hardware, and AV technology with minimal business disruption.</p>
                 </div>
-                <div class="project-card rounded-lg overflow-hidden relative group">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-white">Cloud Print Solution Deployment</h3>
-                        <p class="mt-2 text-gray-400">Deployed and configured Tungsten Printix to centralize print management, reduce overhead, and enable secure printing for all users.</p>
-                    </div>
-                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 project-overlay">
-                        <p class="text-white text-center p-4">Modernized the printing environment, resulting in cost savings and improved security.</p>
-                    </div>
+                <div class="project-card rounded-lg overflow-hidden relative group p-6">
+                    <h3 class="text-xl font-bold">Cloud Print Deployment</h3>
+                    <p class="mt-2 text-gray-600">Deployed Tungsten Printix to centralize print management and reduce overhead.</p>
                 </div>
-                 <div class="project-card rounded-lg overflow-hidden relative group">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-white">Windows 11 Migration</h3>
-                        <p class="mt-2 text-gray-400">Managed the company-wide planning and execution of the Windows 11 upgrade, ensuring data integrity and a smooth user transition.</p>
-                    </div>
-                     <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 project-overlay">
-                        <p class="text-white text-center p-4">Successfully migrated all workstations to a modern, secure, and more productive operating system.</p>
-                    </div>
+                <div class="project-card rounded-lg overflow-hidden relative group p-6">
+                    <h3 class="text-xl font-bold">Windows 11 Migration</h3>
+                    <p class="mt-2 text-gray-600">Managed the company-wide Windows 11 upgrade, ensuring data integrity and a smooth user transition.</p>
                 </div>
-                 <div class="project-card rounded-lg overflow-hidden relative group">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-white">Retail SaaS Application Rollout</h3>
-                        <p class="mt-2 text-gray-400">Led the rollout of new retail SaaS applications, including user administration and Point-of-Sale (POS) system integration.</p>
-                    </div>
-                     <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 project-overlay">
-                        <p class="text-white text-center p-4">Enhanced in-store operational capabilities and improved data synchronization for retail operations.</p>
-                    </div>
+                <div class="project-card rounded-lg overflow-hidden relative group p-6">
+                    <h3 class="text-xl font-bold">Retail SaaS Application Rollout</h3>
+                    <p class="mt-2 text-gray-600">Led the rollout of new retail SaaS applications, including Point-of-Sale (POS) system integration.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Contact Section --><section id="contact" class="py-20">
+        <section id="contact" class="py-20 reveal">
             <div class="text-center">
-                <h2 class="text-3xl font-bold text-white">Let's Connect</h2>
-                <p class="text-gray-400 mt-2 max-w-lg mx-auto">I'm currently seeking new opportunities and would love to hear from you. Whether you have a question or just want to say hi, feel free to reach out.</p>
+                <h2 class="text-3xl font-bold text-gray-900">Let's Connect</h2>
+                <p class="text-gray-600 mt-2 max-w-lg mx-auto">I'm currently seeking new opportunities and would love to hear from you. Whether you have a question or just want to say hi, feel free to reach out.</p>
                 <div class="mt-8">
-                    <a href="mailto:om.acharya2056@gmail.com" class="inline-block gradient-bg text-white px-8 py-4 rounded-full text-xl font-semibold hover:opacity-90 transition duration-300 shadow-lg">
-                       om.acharya2056@gmail.com
+                    <a href="mailto:om.acharya2056@gmail.com" class="inline-block primary-btn px-8 py-4 rounded-md text-xl font-semibold shadow-lg">
+                       Send a Message
                     </a>
                 </div>
                 <div class="mt-8 flex justify-center space-x-6">
-                    <a href="https://www.linkedin.com/in/om-prakash-acharya/" target="_blank" class="text-gray-500 hover:text-purple-400 text-3xl transition duration-300">
+                    <a href="https://www.linkedin.com/in/om-prakash-acharya/" target="_blank" class="text-gray-500 hover:text-blue-600 text-3xl transition duration-300">
                         <i class="fab fa-linkedin"></i>
                     </a>
                 </div>
@@ -299,28 +311,50 @@
         </section>
     </main>
 
-    <!-- Footer --><footer class="py-6 border-t border-gray-800">
+    <footer class="py-6 border-t border-gray-200">
         <div class="container mx-auto px-6 text-center text-gray-500">
             <p>&copy; 2025 Om Acharya. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
+        // Mobile Menu
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+        menuBtn.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => { mobileMenu.classList.add('hidden'); });
         });
 
-        // Close mobile menu when a link is clicked
-        const mobileLinks = document.querySelectorAll('#mobile-menu a');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
+        // Typewriter Effect
+        const typewriterText = "A Passionate IT Professional.";
+        const typewriterEl = document.getElementById('typewriter');
+        let i = 0;
+        function typeWriter() {
+            if (i < typewriterText.length) {
+                typewriterEl.innerHTML += typewriterText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50);
+            }
+        }
+        
+        // Reveal on scroll
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
             });
-        });
+        }, { threshold: 0.1 });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Window event listeners
+        window.onload = function() {
+            setTimeout(typeWriter, 500);
+        }
     </script>
 </body>
 </html>
-
 
